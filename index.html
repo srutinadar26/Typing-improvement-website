@@ -7,27 +7,43 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <header class="header">
         <h1>Quick Keys</h1>
         <div class="stats">
             <div id="timer">Time: <span>60</span>s</div>
             <div id="score">WPM: <span>0</span></div>
+            <div id="accuracy">Accuracy: <span>0</span>%</div>
         </div>
     </header>
 
     <main class="main-content">
-        <div id="words-display">
-    </div>
-        <input type="text" id="typing-input" placeholder="Start typing here..." autofocus>
+        <div class="time-selection">
+            <button class="time-btn" data-time="15">15s</button>
+            <button class="time-btn" data-time="30">30s</button>
+            <button class="time-btn active" data-time="60">60s</button>
+        </div>
+        
+        <div id="loading">Loading words...</div>
+        
+        <div id="words-display"></div>
+        
+        <input type="text" id="typing-input" placeholder="Click start or begin typing..." disabled>
+        
+        <div id="results" class="hidden">
+            <h2>Time's Up!</h2>
+            <div class="result-stats">
+                <div>WPM: <span id="final-wpm">0</span></div>
+                <div>Accuracy: <span id="final-accuracy">0</span>%</div>
+                <div>Best WPM: <span id="best-wpm">0</span></div>
+            </div>
+        </div>
     </main>
 
     <footer class="footer">
+        <button id="start-btn">Start</button>
         <button id="restart-btn">Restart</button>
     </footer>
+    
     <script src="script.js"></script>
-</body>
-</html>
-
 </body>
 </html>

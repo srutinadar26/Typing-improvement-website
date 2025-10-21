@@ -1,4 +1,3 @@
-/* --- Basic Setup & Variables --- */
 :root {
     --bg-color: #2c3e50;
     --text-color: #ecf0f1;
@@ -6,6 +5,10 @@
     --error-color: #e74c3c;
     --correct-color: #2ecc71;
     --font-mono: 'Roboto Mono', 'Courier New', Courier, monospace;
+}
+
+* {
+    box-sizing: border-box;
 }
 
 body {
@@ -21,7 +24,6 @@ body {
     text-align: center;
 }
 
-/* --- Layout Structure --- */
 .header, .main-content, .footer {
     width: 90%;
     max-width: 800px;
@@ -41,7 +43,36 @@ body {
     font-size: 1.2rem;
 }
 
-/* --- Main Content Styling --- */
+.time-selection {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.time-btn {
+    padding: 8px 16px;
+    background-color: #34495e;
+    border: none;
+    border-radius: 4px;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.time-btn.active {
+    background-color: var(--main-color);
+}
+
+.time-btn:hover:not(.active) {
+    background-color: #2980b9;
+}
+
+#loading {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
 #words-display {
     font-family: var(--font-mono);
     font-size: 1.5rem;
@@ -53,6 +84,7 @@ body {
     height: 150px;
     overflow: hidden;
     text-align: left;
+    position: relative;
 }
 
 #typing-input {
@@ -63,7 +95,7 @@ body {
     border-radius: 8px;
     background-color: transparent;
     color: var(--text-color);
-    box-sizing: border-box; /* Ensures padding doesn't affect width */
+    box-sizing: border-box;
 }
 
 #typing-input:focus {
@@ -71,8 +103,33 @@ body {
     box-shadow: 0 0 10px var(--main-color);
 }
 
-/* --- Footer and Buttons --- */
-#restart-btn {
+#results {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #34495e;
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.result-stats {
+    display: flex;
+    justify-content: space-around;
+    font-size: 1.2rem;
+    margin-top: 15px;
+}
+
+.hidden {
+    display: none;
+}
+
+.footer {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+#start-btn, #restart-btn {
     padding: 10px 25px;
     font-size: 1.1rem;
     cursor: pointer;
@@ -83,10 +140,14 @@ body {
     transition: background-color 0.3s ease;
 }
 
-#restart-btn:hover {
+#start-btn:hover, #restart-btn:hover {
     background-color: #2980b9;
 }
-/* --- Letter Styling for Typing Logic --- */
+
+#start-btn:disabled, #restart-btn:disabled {
+    background-color: #7f8c8d;
+    cursor: not-allowed;
+}
 
 .letter {
     transition: color 0.2s;
@@ -104,4 +165,31 @@ body {
 
 .letter.incorrect {
     color: var(--error-color);
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .stats {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .result-stats {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    #words-display {
+        font-size: 1.2rem;
+        height: 120px;
+    }
+    
+    .footer {
+        flex-direction: column;
+    }
 }
