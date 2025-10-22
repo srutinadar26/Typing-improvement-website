@@ -108,7 +108,8 @@ function updateStats() {
   const elapsedTimeInSeconds = (Date.now() - startTime) / 1000;
   if (elapsedTimeInSeconds === 0) return;
   
-  const wpm = Math.round(((correctChars / 5) / elapsedTimeInSeconds) * 60);
+  // FIX: Changed correctChars to totalChars for Raw WPM
+  const wpm = Math.round(((totalChars / 5) / elapsedTimeInSeconds) * 60);
   const accuracy = totalChars > 0 ? Math.round((correctChars / totalChars) * 100) : 0;
   
   scoreDisplay.textContent = wpm;
@@ -137,7 +138,8 @@ function endGame() {
   startButton.disabled = false;
   
   const elapsedTimeInMinutes = totalTime / 60;
-  const wpm = Math.round((correctChars / 5) / elapsedTimeInMinutes) || 0;
+  // FIX: Changed correctChars to totalChars for Raw WPM
+  const wpm = Math.round((totalChars / 5) / elapsedTimeInMinutes) || 0;
   const accuracy = totalChars > 0 ? Math.round((correctChars / totalChars) * 100) : 0;
   
   finalWpmElement.textContent = wpm;
@@ -179,7 +181,7 @@ async function resetGame() {
 function startGame() {
   if (gameStatus === 'waiting') {
     startTimer();
-    typingInput.focus(); // This line focuses the input field
+    typingInput.focus();
   }
 }
 
