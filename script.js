@@ -61,10 +61,6 @@ function handleTyping(e) {
   
   const typedValue = e.target.value;
   const typedLength = typedValue.length;
-  
-  if (typedLength === 1 && correctChars === 0) {
-    startTimer();
-  }
 
   updateCharacterStates(typedValue, typedLength);
   highlightCurrentLetter(typedLength);
@@ -109,8 +105,10 @@ function highlightCurrentLetter(index) {
 function updateStats() {
   if (gameStatus !== 'running') return;
   
-  const elapsedTime = (totalTime - timeLeft) / 60;
-  const wpm = elapsedTime > 0 ? Math.round((correctChars / 5) / elapsedTime) : 0;
+  const elapsedTimeInSeconds = (Date.now() - startTime) / 1000;
+  if (elapsedTimeInSeconds === 0) return;
+  
+  const wpm = Math.round(((correctChars / 5) / elapsedTimeInSeconds) * 60);
   const accuracy = totalChars > 0 ? Math.round((correctChars / totalChars) * 100) : 0;
   
   scoreDisplay.textContent = wpm;
@@ -126,7 +124,7 @@ function startTimer() {
     timeLeft--;
     timerDisplay.textContent = timeLeft;
     
-    if (timeLeft <= 0) {
+    if (timeLeft === 0) {
       endGame();
     }
   }, 1000);
@@ -138,8 +136,8 @@ function endGame() {
   typingInput.disabled = true;
   startButton.disabled = false;
   
-  const elapsedTime = totalTime / 60;
-  const wpm = Math.round((correctChars / 5) / elapsedTime) || 0;
+  const elapsedTimeInMinutes = totalTime / 60;
+  const wpm = Math.round((correctChars / 5) / elapsedTimeInMinutes) || 0;
   const accuracy = totalChars > 0 ? Math.round((correctChars / totalChars) * 100) : 0;
   
   finalWpmElement.textContent = wpm;
@@ -155,33 +153,33 @@ function endGame() {
   resultsElement.classList.remove('hidden');
 }
 
-function resetGame() {
-  clearInterval(timerInterval);
-  gameStatus = 'waiting';
-  timeLeft = totalTime;
-  timerDisplay.textContent = timeLeft;
-  correctChars = 0;
-  totalChars = 0;
-  currentIndex = 0;
-  
-  scoreDisplay.textContent = '0';
-  accuracyDisplay.textContent = '0';
-  
-  typingInput.value = '';
-  typingInput.disabled = false;
-  startButton.disabled = false;
-  resultsElement.classList.add('hidden');
-  
-  displayParagraph();
-  typingInput.focus();
+async function resetGame() {
+    clearInterval(timerInterval);
+    gameStatus = 'waiting';
+    timeLeft = totalTime;
+    timerDisplay.textContent = timeLeft;
+    correctChars = 0;
+    totalChars = 0;
+    currentIndex = 0;
+
+    scoreDisplay.textContent = '0';
+    accuracyDisplay.textContent = '0';
+
+    typingInput.value = '';
+    typingInput.disabled = true;
+    startButton.disabled = false;
+    resultsElement.classList.add('hidden');
+
+    await getWords();
+    displayParagraph();
+    typingInput.disabled = false;
+    typingInput.focus();
 }
 
 function startGame() {
   if (gameStatus === 'waiting') {
-    gameStatus = 'running';
-    startButton.disabled = true;
-    typingInput.focus();
     startTimer();
+    typingInput.focus(); // This line focuses the input field
   }
 }
 
@@ -192,7 +190,7 @@ function setTimeDuration(seconds) {
     timerDisplay.textContent = timeLeft;
     
     timeButtons.forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
+    document.querySelector(`.time-btn[data-time="${seconds}"]`).classList.add('active');
   }
 }
 
@@ -209,12 +207,6 @@ async function initialize() {
   restartButton.addEventListener('click', resetGame);
   
   typingInput.addEventListener('input', handleTyping);
-  
-  typingInput.addEventListener('keydown', (e) => {
-    if (e.key === ' ') {
-      e.preventDefault();
-    }
-  });
   
   const savedBestWpm = localStorage.getItem('bestWpm');
   if (savedBestWpm) {
