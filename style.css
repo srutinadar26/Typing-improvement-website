@@ -1,10 +1,12 @@
+/* --- Custom Theme & Variables --- */
 :root {
-    --bg-color: #2c3e50;
-    --text-color: #ecf0f1;
-    --main-color: #3498db;
-    --error-color: #e74c3c;
-    --correct-color: #2ecc71;
-    --font-mono: 'Roboto Mono', 'Courier New', Courier, monospace;
+    --bg-dark: #212F3D;
+    --text-light: #ABB2B9;
+    --accent-color: #1ABC9C;
+    --surface-color: #2C3A47;
+    --error-color: #E74C3C;
+    --correct-color: #2ECC71;
+    --font-mono: 'Roboto Mono', 'Source Code Pro', 'Courier New', Courier, monospace;
 }
 
 * {
@@ -12,104 +14,157 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-color);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
     margin: 0;
     display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    align-items: center;
     justify-content: center;
-    text-align: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
-.header, .main-content, .footer {
+.container {
     width: 90%;
-    max-width: 800px;
-    padding: 1rem;
+    max-width: 850px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid var(--main-color);
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--accent-color);
+}
+
+h1 {
+    color: var(--accent-color);
+    font-size: 2.2rem;
+    margin: 0;
 }
 
 .stats {
     display: flex;
-    gap: 20px;
-    font-size: 1.2rem;
+    gap: 25px;
+    font-size: 1.1rem;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .time-selection {
-    margin-bottom: 20px;
     display: flex;
-    gap: 10px;
     justify-content: center;
+    gap: 10px;
 }
 
 .time-btn {
     padding: 8px 16px;
-    background-color: #34495e;
-    border: none;
-    border-radius: 4px;
-    color: var(--text-color);
+    background-color: var(--surface-color);
+    border: 2px solid var(--surface-color);
+    border-radius: 5px;
+    color: var(--text-light);
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .time-btn.active {
-    background-color: var(--main-color);
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--bg-dark);
 }
 
 .time-btn:hover:not(.active) {
-    background-color: #2980b9;
+    background-color: #3f5267;
+    border-color: #3f5267;
 }
 
 #loading {
     font-size: 1.2rem;
+    color: var(--accent-color);
     margin-bottom: 20px;
 }
 
 #words-display {
     font-family: var(--font-mono);
-    font-size: 1.5rem;
-    line-height: 2;
-    margin-bottom: 20px;
-    background-color: #34495e;
-    padding: 20px;
+    font-size: 1.6rem;
+    line-height: 1.8;
+    background-color: var(--surface-color);
+    padding: 25px;
     border-radius: 8px;
-    height: 150px;
-    overflow: hidden;
+    height: 210px; 
+    overflow: auto;
     text-align: left;
     position: relative;
+    color: var(--text-light);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-color) var(--surface-color);
+}
+
+#words-display::-webkit-scrollbar {
+    width: 8px;
+}
+
+#words-display::-webkit-scrollbar-track {
+    background: var(--surface-color);
+    border-radius: 4px;
+}
+
+#words-display::-webkit-scrollbar-thumb {
+    background-color: var(--accent-color);
+    border-radius: 4px;
+}
+
+.time-btn:focus, #start-btn:focus, #restart-btn:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+#caret {
+    position: absolute;
+    width: 2px;
+    height: 1.2em;
+    background-color: var(--accent-color);
+    border-radius: 1px;
+    transition: left 0.08s ease-out, top 0.08s ease-out;
+    animation: blink 1s step-end infinite;
+    pointer-events: none;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
 }
 
 #typing-input {
-    width: 100%;
-    padding: 15px;
-    font-size: 1.2rem;
-    border: 2px solid var(--main-color);
-    border-radius: 8px;
-    background-color: transparent;
-    color: var(--text-color);
-    box-sizing: border-box;
-}
-
-#typing-input:focus {
-    outline: none;
-    box-shadow: 0 0 10px var(--main-color);
+    opacity: 0;
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
 }
 
 #results {
     margin-top: 20px;
     padding: 20px;
-    background-color: #34495e;
+    background-color: var(--surface-color);
     border-radius: 8px;
     width: 100%;
     box-sizing: border-box;
+    color: var(--text-light);
+}
+
+h2 {
+    color: var(--accent-color);
+    margin-top: 0;
+    font-size: 1.8rem;
 }
 
 .result-stats {
@@ -133,30 +188,25 @@ body {
     padding: 10px 25px;
     font-size: 1.1rem;
     cursor: pointer;
-    background-color: var(--main-color);
-    color: var(--text-color);
+    background-color: var(--accent-color);
+    color: var(--bg-dark);
     border: none;
     border-radius: 5px;
     transition: background-color 0.3s ease;
 }
 
 #start-btn:hover, #restart-btn:hover {
-    background-color: #2980b9;
+    background-color: #16a085;
 }
 
 #start-btn:disabled, #restart-btn:disabled {
     background-color: #7f8c8d;
     cursor: not-allowed;
+    color: #bdc3c7;
 }
 
 .letter {
     transition: color 0.2s;
-}
-
-.letter.active {
-    background-color: var(--main-color);
-    color: var(--bg-color);
-    border-radius: 3px;
 }
 
 .letter.correct {
@@ -165,31 +215,56 @@ body {
 
 .letter.incorrect {
     color: var(--error-color);
-    text-decoration: underline;
+}
+
+.shake {
+    animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    50% { transform: translateX(3px); }
+    75% { transform: translateX(-3px); }
 }
 
 @media (max-width: 768px) {
+    .container {
+        gap: 1rem;
+    }
     .header {
         flex-direction: column;
         gap: 15px;
+        padding-bottom: 0.5rem;
     }
-    
+    h1 {
+        font-size: 1.8rem;
+    }
     .stats {
-        flex-direction: column;
-        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+        font-size: 1rem;
+        gap: 15px;
     }
-    
+    #words-display {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        height: 120px;
+        padding: 15px;
+    }
+    #caret {
+        height: 1.1em;
+    }
     .result-stats {
         flex-direction: column;
         gap: 10px;
     }
-    
-    #words-display {
-        font-size: 1.2rem;
-        height: 120px;
-    }
-    
     .footer {
         flex-direction: column;
+        gap: 10px;
+    }
+    #start-btn, #restart-btn, .time-btn {
+        width: 100%;
+        max-width: 200px;
     }
 }

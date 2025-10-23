@@ -3,47 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A clean and simple typing test to improve your speed and accuracy.">
     <title>Simply Type</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class="header">
-        <h1>Simply Type</h1>
-        <div class="stats">
-            <div id="timer">Time: <span>60</span>s</div>
-            <div id="score">WPM: <span>0</span></div>
-            <div id="accuracy">Accuracy: <span>0</span>%</div>
-        </div>
-    </header>
 
-    <main class="main-content">
-        <div class="time-selection">
-            <button class="time-btn" data-time="15">15s</button>
-            <button class="time-btn" data-time="30">30s</button>
-            <button class="time-btn active" data-time="60">60s</button>
-        </div>
-        
-        <div id="loading">Loading words...</div>
-        
-        <div id="words-display"></div>
-        
-        <input type="text" id="typing-input" placeholder="Click start or begin typing..." disabled>
-        
-        <div id="results" class="hidden">
-            <h2>Time's Up!</h2>
-            <div class="result-stats">
-                <div>WPM: <span id="final-wpm">0</span></div>
-                <div>Accuracy: <span id="final-accuracy">0</span>%</div>
-                <div>Best WPM: <span id="best-wpm">0</span></div>
+    <div class="container">
+        <header class="header">
+            <h1>Simply Type</h1>
+            <div class="stats">
+                <div id="timer">Time: <span>60</span>s</div>
+                <div id="score">WPM: <span>0</span></div>
+                <div id="accuracy">Accuracy: <span>0</span>%</div>
             </div>
-        </div>
-    </main>
+        </header>
 
-    <footer class="footer">
-        <button id="start-btn">Start</button>
-        <button id="restart-btn">Restart</button>
-    </footer>
-    
+        <main class="main-content">
+            <div class="time-selection">
+                <button class="time-btn" data-time="15">15s</button>
+                <button class="time-btn" data-time="30">30s</button>
+                <button class="time-btn active" data-time="60">60s</button>
+            </div>
+
+            <div id="loading" class="hidden">Loading words...</div>
+
+            <div id="words-display"></div>
+            
+            <input type="text" id="typing-input" autofocus>
+
+            <div id="results" class="hidden">
+                <h2>Time's Up!</h2>
+                <div class="result-stats">
+                    <div>WPM: <span id="final-wpm">0</span></div>
+                    <div>Accuracy: <span id="final-accuracy">0</span>%</div>
+                    <div>Best WPM: <span id="best-wpm">0</span></div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <button id="start-btn">Start</button>
+            <button id="restart-btn">Restart</button>
+        </footer>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
