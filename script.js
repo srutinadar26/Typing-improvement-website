@@ -14,7 +14,7 @@ const finalAccuracyElement = document.querySelector('#final-accuracy');
 const bestWpmElement = document.querySelector('#best-wpm');
 
 // --- State Variables ---
-const API_URL = 'https://api.datamuse.com/words?ml=nature&max=100';
+const API_URL = 'https://api.datamuse.com/words?ml=nature&max=300';
 
 const FALLBACK_WORDS = [
   'the', 'quick', 'brown', 'fox', 'jumps', 'over', 'the', 'lazy', 'dog', 'a',
