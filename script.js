@@ -14,7 +14,8 @@ const finalAccuracyElement = document.querySelector('#final-accuracy');
 const bestWpmElement = document.querySelector('#best-wpm');
 
 // --- State Variables ---
-const API_URL = 'https://random-word-api.herokuapp.com/word?number=100';
+const API_URL = 'https://api.datamuse.com/words?ml=nature&max=100';
+
 const FALLBACK_WORDS = [
   'the', 'quick', 'brown', 'fox', 'jumps', 'over', 'the', 'lazy', 'dog', 'a',
   'pack', 'my', 'box', 'with', 'five', 'dozen', 'liquor', 'jugs', 'how', 'vexingly',
@@ -38,8 +39,10 @@ async function getWords() {
   try {
     const response = await fetch(API_URL);
     if (!response.ok) throw new Error('Network response was not ok');
+    
     const data = await response.json();
-    paragraph = data.join(' ');
+    paragraph = data.map(item => item.word).join(' ');
+    
   } catch (error) {
     console.error('Failed to fetch words, using fallback.', error);
     paragraph = FALLBACK_WORDS.join(' ');
@@ -104,7 +107,7 @@ function handleTyping(e) {
     updateStats();
   } else if (gameStatus === 'waiting' && e.target.value.length > 0) {
     startGame();
-    handleTyping(e); // Re-run to process the first character
+    handleTyping(e);
   }
 }
 
