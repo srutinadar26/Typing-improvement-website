@@ -1,6 +1,4 @@
 # Typing-improvement-website
-# Quick Keys - Typing Improvement Website
-
 A modern, responsive typing test web application designed to help users improve their typing speed and accuracy. Practice with randomly generated words and track your progress over time.
 
 ![Typing Test](https://img.shields.io/badge/Project-Typing%20Test-blue)
